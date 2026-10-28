@@ -1,9 +1,10 @@
-<!DOCTYPE html>
+
+ 
+    <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <!-- Balises pour l'application iPhone/iPad (PWA) -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Mon Cycle">
@@ -79,6 +80,67 @@
             justify-content: space-between;
         }
 
+        /* --- Calendrier --- */
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: var(--pink-dark);
+        }
+        .calendar-header button {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: var(--pink-dark);
+            padding: 5px 15px;
+            cursor: pointer;
+        }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            text-align: center;
+        }
+        .day-name {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--pink-medium);
+            margin-bottom: 5px;
+        }
+        .calendar-day {
+            padding: 10px 5px;
+            border-radius: 12px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+            position: relative;
+        }
+        .calendar-day:hover, .calendar-day.selected {
+            background-color: var(--pink-light);
+            font-weight: bold;
+        }
+        .calendar-day.period-day {
+            background-color: var(--pink-medium);
+            color: var(--white);
+        }
+        .calendar-day.rdv-day::after {
+            content: "•";
+            color: var(--pink-dark);
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 18px;
+        }
+        .event-input-area {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--pink-light);
+            display: none;
+        }
+        
         /* Checkbox Pilule */
         .pill-container {
             display: flex;
@@ -86,12 +148,7 @@
             justify-content: space-between;
             padding: 10px 0;
         }
-
-        .pill-text {
-            font-size: 16px;
-            font-weight: 500;
-        }
-
+        .pill-text { font-size: 16px; font-weight: 500; }
         .custom-checkbox {
             width: 32px;
             height: 32px;
@@ -104,18 +161,14 @@
             transition: 0.3s;
             font-size: 18px;
         }
-
         .custom-checkbox.checked {
             background-color: var(--pink-dark);
             border-color: var(--pink-dark);
             color: var(--white);
         }
 
-        /* Echelle de douleur */
-        .slider-container {
-            text-align: center;
-        }
-
+        /* Douleur & Conseil */
+        .slider-container { text-align: center; }
         .pain-value {
             font-size: 32px;
             font-weight: bold;
@@ -123,13 +176,11 @@
             margin: 10px 0;
             display: block;
         }
-
         input[type=range] {
             -webkit-appearance: none;
             width: 100%;
             background: transparent;
         }
-
         input[type=range]::-webkit-slider-thumb {
             -webkit-appearance: none;
             height: 24px;
@@ -140,22 +191,25 @@
             margin-top: -8px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
-
         input[type=range]::-webkit-slider-runnable-track {
             width: 100%;
             height: 8px;
-            cursor: pointer;
             background: var(--pink-light);
             border-radius: 10px;
         }
-
-        /* Symptômes */
-        .symptoms-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
+        .advice-box {
+            background-color: #FFF0F3;
+            border-left: 4px solid var(--pink-dark);
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 14px;
+            display: none;
+            line-height: 1.4;
         }
 
+        /* Symptômes & Médicaments */
+        .symptoms-grid { display: flex; flex-wrap: wrap; gap: 10px; }
         .symptom-chip {
             background-color: var(--gray-light);
             color: var(--text);
@@ -166,20 +220,17 @@
             cursor: pointer;
             transition: 0.3s;
         }
-
         .symptom-chip.active {
             background-color: var(--pink-medium);
             color: var(--white);
         }
 
-        /* Médicaments */
         .input-group {
             display: flex;
             gap: 10px;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
-
-        select, input[type="time"] {
+        select, input[type="time"], input[type="text"] {
             border: 2px solid var(--pink-light);
             border-radius: 12px;
             padding: 10px;
@@ -188,9 +239,9 @@
             color: var(--text);
             background-color: #FAFAFA;
             flex: 1;
+            width: 100%;
         }
-
-        button.add-btn {
+        button.action-btn {
             background-color: var(--pink-medium);
             color: var(--white);
             border: none;
@@ -200,19 +251,10 @@
             cursor: pointer;
             transition: 0.3s;
         }
+        button.action-btn:active { background-color: var(--pink-dark); transform: scale(0.95); }
 
-        button.add-btn:active {
-            background-color: var(--pink-dark);
-            transform: scale(0.95);
-        }
-
-        .med-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .med-item {
+        .list-container { display: flex; flex-direction: column; gap: 10px; }
+        .list-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -222,13 +264,7 @@
             font-size: 14px;
             font-weight: 500;
         }
-
-        .delete-btn {
-            color: #ff6b6b;
-            font-weight: bold;
-            font-size: 16px;
-            cursor: pointer;
-        }
+        .delete-btn { color: #ff6b6b; font-weight: bold; font-size: 16px; cursor: pointer; }
         
         .save-day-btn {
             width: 100%;
@@ -241,11 +277,6 @@
             font-weight: 600;
             margin-top: 10px;
         }
-        
-        .save-day-btn:active {
-            opacity: 0.8;
-            transform: scale(0.98);
-        }
     </style>
 </head>
 <body>
@@ -256,7 +287,37 @@
         <div class="date-display" id="currentDate">Date du jour</div>
     </div>
 
-    <!-- Carte Pilule -->
+    <!-- NOUVEAU: Calendrier -->
+    <div class="card">
+        <div class="card-title">Calendrier 📅</div>
+        <div class="calendar-header">
+            <button onclick="changeMonth(-1)">‹</button>
+            <span id="monthYearDisplay"></span>
+            <button onclick="changeMonth(1)">›</button>
+        </div>
+        <div class="calendar-grid" id="calendarGrid">
+            <!-- Jours générés par JS -->
+        </div>
+        
+        <!-- Zone d'ajout d'événement sous le calendrier -->
+        <div class="event-input-area" id="eventArea">
+            <div style="font-weight: 600; color: var(--pink-dark); margin-bottom: 10px;" id="selectedDateText"></div>
+            <div class="input-group">
+                <select id="eventType">
+                    <option value="Règles">🩸 Période de Règles</option>
+                    <option value="RDV Gynéco">👩‍⚕️ RDV Gynéco</option>
+                    <option value="Note">📝 Autre note</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <input type="text" id="eventNote" placeholder="Détails (ex: rdv 14h, douleurs...)">
+                <button class="action-btn" onclick="addEvent()">+</button>
+            </div>
+            <div class="list-container" id="eventListContainer"></div>
+        </div>
+    </div>
+
+    <!-- Pilule -->
     <div class="card">
         <div class="pill-container" onclick="togglePill()">
             <span class="pill-text">Pilule prise aujourd'hui ?</span>
@@ -264,24 +325,24 @@
         </div>
     </div>
 
-    <!-- Carte Douleur -->
+    <!-- Douleur -->
     <div class="card">
         <div class="card-title">Niveau de douleur 🩸</div>
         <div class="slider-container">
             <span class="pain-value" id="painDisplay">0</span>
             <input type="range" id="painSlider" min="0" max="10" value="0" oninput="updatePain()">
         </div>
+        <!-- NOUVEAU: Boîte à conseils -->
+        <div class="advice-box" id="painAdvice"></div>
     </div>
 
-    <!-- Carte Symptômes -->
+    <!-- Symptômes -->
     <div class="card">
-        <div class="card-title">Mes symptômes (Règles / Endo)</div>
-        <div class="symptoms-grid" id="symptomsContainer">
-            <!-- Rempli par le JavaScript -->
-        </div>
+        <div class="card-title">Mes symptômes</div>
+        <div class="symptoms-grid" id="symptomsContainer"></div>
     </div>
 
-    <!-- Carte Médicaments -->
+    <!-- Médicaments -->
     <div class="card">
         <div class="card-title">Médicaments pris 💊</div>
         <div class="input-group">
@@ -291,51 +352,130 @@
                 <option value="Doliprane">Doliprane</option>
                 <option value="Ibuprofène">Ibuprofène</option>
                 <option value="Ponstyl">Ponstyl</option>
-                <option value="Tramadol">Tramadol</option>
                 <option value="Autre">Autre...</option>
             </select>
-            <input type="time" id="medTime" required>
-            <button class="add-btn" onclick="addMed()">+</button>
+            <input type="time" id="medTime">
+            <button class="action-btn" onclick="addMed()">+</button>
         </div>
-        <div class="med-list" id="medListContainer">
-            <!-- Liste des médicaments pris -->
-        </div>
+        <div class="list-container" id="medListContainer"></div>
     </div>
 
     <button class="save-day-btn" onclick="saveDay()">Enregistrer ma journée ✨</button>
 </div>
 
 <script>
-    // Configuration de base
-    const today = new Date().toISOString().split('T')[0];
+    // --- Variables de base ---
+    const todayStr = new Date().toISOString().split('T')[0];
     const displayDate = new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
     document.getElementById('currentDate').innerText = displayDate.charAt(0).toUpperCase() + displayDate.slice(1);
 
-    // Liste des symptômes
-    const allSymptoms = [
-        "Crampes", "Douleur pelvienne", "Fatigue", "Ballonnements", 
-        "Maux de tête", "Nausées", "Douleur bas du dos", "Acné", 
-        "Sauts d'humeur", "Seins douloureux", "Règles abondantes"
-    ];
+    const allSymptoms = ["Crampes", "Douleur pelvienne", "Fatigue", "Ballonnements", "Maux de tête", "Nausées", "Douleur bas du dos", "Acné", "Sauts d'humeur", "Seins douloureux", "Règles abondantes"];
 
-    // Données du jour
-    let dayData = JSON.parse(localStorage.getItem('cycleData_' + today)) || {
-        pillTaken: false,
-        pain: 0,
-        symptoms: [],
-        meds: []
-    };
+    let dayData = JSON.parse(localStorage.getItem('cycleData_' + todayStr)) || { pillTaken: false, pain: 0, symptoms: [], meds: [] };
+    let calendarEvents = JSON.parse(localStorage.getItem('cycleCalendar')) || {};
 
-    // Initialisation
+    let currentNavDate = new Date();
+    let selectedDateStr = null;
+
+    // --- Initialisation ---
     initSymptoms();
     loadDayData();
+    renderCalendar();
 
-    // --- Fonctions Pilule ---
+    // --- Calendrier ---
+    function renderCalendar() {
+        const monthYear = currentNavDate.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' });
+        document.getElementById('monthYearDisplay').innerText = monthYear.charAt(0).toUpperCase() + monthYear.slice(1);
+        
+        const grid = document.getElementById('calendarGrid');
+        grid.innerHTML = '<div class="day-name">L</div><div class="day-name">M</div><div class="day-name">M</div><div class="day-name">J</div><div class="day-name">V</div><div class="day-name">S</div><div class="day-name">D</div>';
+        
+        const year = currentNavDate.getFullYear();
+        const month = currentNavDate.getMonth();
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        
+        // Ajuster pour que la semaine commence le lundi (1)
+        let emptyDays = firstDay === 0 ? 6 : firstDay - 1;
+        for (let i = 0; i < emptyDays; i++) {
+            grid.innerHTML += '<div></div>';
+        }
+
+        for (let i = 1; i <= daysInMonth; i++) {
+            const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(i).padStart(2,'0')}`;
+            let classes = 'calendar-day';
+            
+            if (calendarEvents[dateStr]) {
+                const events = calendarEvents[dateStr];
+                if (events.some(e => e.type === 'Règles')) classes += ' period-day';
+                if (events.some(e => e.type === 'RDV Gynéco')) classes += ' rdv-day';
+            }
+            if (dateStr === selectedDateStr) classes += ' selected';
+            if (dateStr === todayStr) classes += ' today'; // Optionnel pour marquer aujourd'hui
+
+            grid.innerHTML += `<div class="${classes}" onclick="selectDate('${dateStr}', ${i})">${i}</div>`;
+        }
+    }
+
+    function changeMonth(direction) {
+        currentNavDate.setMonth(currentNavDate.getMonth() + direction);
+        document.getElementById('eventArea').style.display = 'none';
+        selectedDateStr = null;
+        renderCalendar();
+    }
+
+    function selectDate(dateStr, dayNum) {
+        selectedDateStr = dateStr;
+        document.getElementById('eventArea').style.display = 'block';
+        
+        const prettyDate = new Date(dateStr).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
+        document.getElementById('selectedDateText').innerText = "Ajouter pour le " + prettyDate;
+        
+        renderEventsForSelectedDate();
+        renderCalendar(); // Met à jour la sélection visuelle
+    }
+
+    function addEvent() {
+        if (!selectedDateStr) return;
+        const type = document.getElementById('eventType').value;
+        const note = document.getElementById('eventNote').value;
+        
+        if (!calendarEvents[selectedDateStr]) calendarEvents[selectedDateStr] = [];
+        calendarEvents[selectedDateStr].push({ id: Date.now(), type, note });
+        
+        localStorage.setItem('cycleCalendar', JSON.stringify(calendarEvents));
+        document.getElementById('eventNote').value = '';
+        
+        renderEventsForSelectedDate();
+        renderCalendar(); // Rafraîchit les couleurs du calendrier
+    }
+
+    function renderEventsForSelectedDate() {
+        const container = document.getElementById('eventListContainer');
+        container.innerHTML = '';
+        if (calendarEvents[selectedDateStr]) {
+            calendarEvents[selectedDateStr].forEach(ev => {
+                const div = document.createElement('div');
+                div.className = 'list-item';
+                div.innerHTML = `<span><b>${ev.type}</b>: ${ev.note}</span><span class="delete-btn" onclick="deleteEvent(${ev.id})">×</span>`;
+                container.appendChild(div);
+            });
+        }
+    }
+
+    function deleteEvent(id) {
+        calendarEvents[selectedDateStr] = calendarEvents[selectedDateStr].filter(ev => ev.id !== id);
+        if (calendarEvents[selectedDateStr].length === 0) delete calendarEvents[selectedDateStr];
+        localStorage.setItem('cycleCalendar', JSON.stringify(calendarEvents));
+        renderEventsForSelectedDate();
+        renderCalendar();
+    }
+
+    // --- Pilule ---
     function togglePill() {
         dayData.pillTaken = !dayData.pillTaken;
         updatePillUI();
     }
-
     function updatePillUI() {
         const checkbox = document.getElementById('pillCheckbox');
         if (dayData.pillTaken) {
@@ -347,14 +487,29 @@
         }
     }
 
-    // --- Fonctions Douleur ---
+    // --- Douleur & Conseils ---
     function updatePain() {
         const slider = document.getElementById('painSlider');
-        document.getElementById('painDisplay').innerText = slider.value;
-        dayData.pain = parseInt(slider.value);
+        const val = parseInt(slider.value);
+        document.getElementById('painDisplay').innerText = val;
+        dayData.pain = val;
+
+        const adviceBox = document.getElementById('painAdvice');
+        if (val >= 8) {
+            adviceBox.style.display = 'block';
+            adviceBox.innerHTML = "Ouch... 🥺 Ta douleur est intense. Mets vite une <b>bouillotte bien chaude</b> sur ton ventre, prends ton anti-douleur, et surtout repose-toi au maximum !";
+        } else if (val >= 5) {
+            adviceBox.style.display = 'block';
+            adviceBox.innerHTML = "Aïe, ça commence à tirer. 🌸 Une <b>tisane réconfortante</b> et un petit massage du bas du dos te feraient du bien.";
+        } else if (val >= 1) {
+            adviceBox.style.display = 'block';
+            adviceBox.innerHTML = "Petite gêne aujourd'hui. Hydrate-toi bien et écoute ton corps ! ✨";
+        } else {
+            adviceBox.style.display = 'none';
+        }
     }
 
-    // --- Fonctions Symptômes ---
+    // --- Symptômes ---
     function initSymptoms() {
         const container = document.getElementById('symptomsContainer');
         allSymptoms.forEach(sym => {
@@ -365,7 +520,6 @@
             container.appendChild(chip);
         });
     }
-
     function toggleSymptom(sym, element) {
         if (dayData.symptoms.includes(sym)) {
             dayData.symptoms = dayData.symptoms.filter(s => s !== sym);
@@ -376,63 +530,46 @@
         }
     }
 
-    // --- Fonctions Médicaments ---
+    // --- Médicaments ---
     function addMed() {
         const name = document.getElementById('medSelect').value;
         let time = document.getElementById('medTime').value;
-        
         if (!time) {
             const now = new Date();
             time = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
         }
-
-        const newMed = { id: Date.now(), name, time };
-        dayData.meds.push(newMed);
+        dayData.meds.push({ id: Date.now(), name, time });
         renderMeds();
     }
-
     function deleteMed(id) {
         dayData.meds = dayData.meds.filter(m => m.id !== id);
         renderMeds();
     }
-
     function renderMeds() {
         const container = document.getElementById('medListContainer');
         container.innerHTML = '';
         dayData.meds.forEach(med => {
             const div = document.createElement('div');
-            div.className = 'med-item';
-            div.innerHTML = `
-                <span>${med.name} à ${med.time}</span>
-                <span class="delete-btn" onclick="deleteMed(${med.id})">×</span>
-            `;
+            div.className = 'list-item';
+            div.innerHTML = `<span>${med.name} à ${med.time}</span><span class="delete-btn" onclick="deleteMed(${med.id})">×</span>`;
             container.appendChild(div);
         });
     }
 
-    // --- Sauvegarde et Chargement ---
+    // --- Sauvegarde globale ---
     function loadDayData() {
-        // Pilule
         updatePillUI();
-        
-        // Douleur
         document.getElementById('painSlider').value = dayData.pain;
-        document.getElementById('painDisplay').innerText = dayData.pain;
+        updatePain(); // Pour afficher le conseil si besoin
         
-        // Symptômes (mise à jour visuelle)
         const chips = document.querySelectorAll('.symptom-chip');
         chips.forEach(chip => {
-            if (dayData.symptoms.includes(chip.innerText)) {
-                chip.classList.add('active');
-            }
+            if (dayData.symptoms.includes(chip.innerText)) chip.classList.add('active');
         });
-
-        // Médicaments
         renderMeds();
     }
-
     function saveDay() {
-        localStorage.setItem('cycleData_' + today, JSON.stringify(dayData));
+        localStorage.setItem('cycleData_' + todayStr, JSON.stringify(dayData));
         alert('Ta journée a été enregistrée avec succès ! 🌸');
     }
 </script>
